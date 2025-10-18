@@ -1,6 +1,11 @@
 <?php
 session_start();
-$usuario = "Administrador"; // Usuario logueado
+if (!isset($_SESSION['usuario'])) {
+  header("Location: login.php");
+  exit;
+}
+$usuario = $_SESSION['usuario'];
+$pagina = "Inicio";
 ?>
 <!DOCTYPE html>
 <html lang="es">

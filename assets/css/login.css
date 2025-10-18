@@ -1,0 +1,51 @@
+body {
+      background: linear-gradient(135deg, #fdf8e1, #e4b33233); /* dorado suave */
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .login-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .login-card h3 {
+      color: #e4b332;
+      font-weight: bold;
+    }
+    .form-control {
+      border-radius: 10px;
+      border-color: #999999;
+    }
+    .form-control:focus {
+      border-color: #e4b332;
+      box-shadow: 0 0 5px #e4b332aa;
+    }
+    .btn-login {
+      background-color: #e4b332;
+      color: #fff;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .btn-login:hover {
+      background-color: #caa12a;
+    }
+    .logo {
+      font-size: 3rem;
+      color: #e4b332;
+    }
+    .text-muted {
+      color: #999999 !important;
+    }
+    a {
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }

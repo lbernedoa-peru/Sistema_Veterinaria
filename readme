@@ -1,0 +1,47 @@
+/veterinaria_tessa/
+│
+├── index.php                # Página principal (redirección o login)
+├── login.php                # Interfaz de inicio de sesión
+├── main.php                 # Panel principal del sistema
+│
+├── /config/                 # Archivos de configuración
+│   ├── db.php               # Conexión a la base de datos
+│   └── settings.php         # Variables globales, rutas, constantes
+│
+├── /controllers/            # Lógica de negocio (procesos PHP)
+│   ├── clienteController.php
+│   ├── mascotaController.php
+│   ├── historialController.php
+│   └── usuarioController.php
+│
+├── /models/                 # Clases y consultas SQL
+│   ├── Cliente.php
+│   ├── Mascota.php
+│   ├── Historial.php
+│   └── Usuario.php
+│
+├── /views/                  # Interfaces visuales (Bootstrap)
+│   ├── registro_cliente.php
+│   ├── buscar_cliente.php
+│   ├── historial.php
+│   ├── ver_historial.php
+│   └── editar_historial.php
+│
+├── /assets/                 # Archivos estáticos
+│   ├── /css/
+│   │   └── styles.css       # Estilos personalizados (colores de Tessa)
+│   ├── /js/
+│   │   └── main.js          # Funciones JS (modal, validaciones)
+│   ├── /img/
+│   │   └── logo.png
+│   └── /uploads/            # Fotos de mascotas, etc.
+│
+├── /includes/               # Componentes reutilizables
+│   ├── header.php
+│   ├── navbar.php
+│   ├── sidebar.php
+│   └── footer.php
+│
+└── /database/
+    ├── veterinaria_tessa.sql   # Script con tablas y datos de ejemplo
+    └── README.md               # Documentación de la BD
