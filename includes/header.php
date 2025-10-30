@@ -1,7 +1,7 @@
 <!-- includes/header.php -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#e4b332;">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="main.php"><img src="../assets/img/logo_vet02.png" alt="logo_vet" class="img-fluid" style="width:50px; height:50px; object-fit:cover;">Veterinaria Tessa</a>
+        <a class="navbar-brand fw-bold" href="inicio.php"><img src="../assets/img/logo_vet02.png" alt="logo_vet" class="img-fluid" style="width:50px; height:50px; object-fit:cover;">Veterinaria Tessa</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
