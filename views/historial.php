@@ -1,24 +1,36 @@
 <?php
 // views/historial.php
 session_start();
+
 if (!isset($_SESSION['usuario'])) {
-  header("Location: login.php");
-  exit;
+    header("Location: login.php");
+    exit;
 }
 
 $usuario = $_SESSION['usuario'];
 $pagina = "Historial";
+
+// Incluir el modelo
+require_once '../model/mo_historial_cliente.php';
+
+// Obtener el filtro del formulario
+$filtro_buscar = isset($_POST['busqueda']) ? trim($_POST['busqueda']) : '';
+
+// Cargar los clientes
+$clientes = cargar_historial($filtro_buscar);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include ('../includes/head.php'); ?>
+    <?php include('../includes/head.php'); ?>
 </head>
 <body>
     <header>
-        <?php include ('../includes/header.php'); ?>
+        <?php include('../includes/header.php'); ?>
     </header>
+
     <!-- CONTENIDO HISTORIAL -->
       <div class="container my-5">
         <div class="row justify-content-center">
@@ -42,56 +54,49 @@ $pagina = "Historial";
                       <th>ID</th>
                       <th>Fecha</th>
                       <th>Cliente</th>
+                      <th>Dni</th>
                       <th>Mascota</th>
-                      <th>Motivo</th>
                       <th>Tratamiento</th>
+                      <th>Motivo</th>
                       <th>Veterinario</th>
+                      <th>Costo</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- Ejemplo de registros simulados -->
-                    <tr>
-                      <td>001</td>
-                      <td>2025-10-10</td>
-                      <td>Ana López</td>
-                      <td>Rocky</td>
-                      <td>Vacunación</td>
-                      <td>Vacuna antirrábica</td>
-                      <td>Dr. Ramírez</td>
-                      <td>
-                        <a href="ver_historial.php?id=1" class="btn btn-outline-warning btn-sm">
-                          <i class="bi bi-eye"></i> Ver
-                        </a>
-                        <a href="editar_historial.php?id=1" class="btn btn-outline-success btn-sm">
-                          <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>002</td>
-                      <td>2025-09-28</td>
-                      <td>Carlos Pérez</td>
-                      <td>Tommy</td>
-                      <td>Consulta general</td>
-                      <td>Desparasitación interna</td>
-                      <td>Dra. Torres</td>
-                      <td>
-                        <a href="ver_historial.php?id=2" class="btn btn-outline-warning btn-sm">
-                          <i class="bi bi-eye"></i> Ver
-                        </a>
-                        <a href="editar_historial.php?id=2" class="btn btn-outline-success btn-sm">
-                          <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                      </td>
-                    </tr>
+                    <?php foreach ($clientes as $cliente): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($cliente['Id']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Fecha_registro']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Nombre']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Dni']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['N_Mascota']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Tratamiento']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Motivo']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Veterinario']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Costo']); ?></td>
+                                        <td>
+                                            <a href="ver_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-warning btn-sm me-1">
+                                                <i class="bi bi-eye"></i> Ver
+                                            </a>
+                                            <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-success btn-sm">
+                                                <i class="bi bi-pencil-square"></i> Editar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                <?php if (empty($clientes)): ?>
+                                    <tr>
+                                        <td colspan="10" class="text-center text-muted">No se encontraron clientes.</td>
+                                    </tr>
+                                <?php endif; ?>
                   </tbody>
                 </table>
               </div>
 
               <div class="text-center mt-4">
-                <a href="registro.php" class="btn btn-outline-warning fw-bold">
-                  <i class="bi bi-person-plus"></i> Registrar nuevo cliente
+                <a href="registro_atencion.php" class="btn btn-outline-warning fw-bold">
+                  <i class="bi bi-person-plus"></i> Registrar nueva atención
                 </a>
                 <a href="#" class="btn btn-outline-secondary fw-bold ms-6">
                   <i class="bi bi-arrow-left-circle"></i> Volver
@@ -102,9 +107,10 @@ $pagina = "Historial";
         </div>
       </div>
     <footer>
-    <?php include('../includes/footer.php'); ?>
+        <?php include('../includes/footer.php'); ?>
     </footer>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+    <!-- Bootstrap JS (Popper incluido) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>

@@ -1,110 +1,79 @@
 <?php
+// views/ver_historial.php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-  header("Location: login.php");
-  exit;
+    header("Location: login.php");
+    exit;
 }
 
 $usuario = $_SESSION['usuario'];
+$pagina = "";
+
+include('../config/Database.php');
+include('../controller/co_registrar_cliente.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>Ver Historial - Veterinaria Tessa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f6f4eb;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .navbar {
-      background-color: #e4b332;
-    }
-    footer {
-      margin-top: auto;
-      background: #e4b332;
-      color: #fff;
-      text-align: center;
-      padding: 15px 10px;
-    }
-    header {
-      background: #fff9e5;
-      border-bottom: 3px solid #e4b33255;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    header h1 {
-      color: #e4b332;
-      font-weight: bold;
-    }
-  </style>
+  <?php include('../includes/head.php'); ?>
 </head>
-<body>
+<body class="bg-light d-flex flex-column min-vh-100">
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="main.php"><i class="bi bi-paw-fill"></i> Veterinaria Tessa</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="main.php"><i class="bi bi-house-heart"></i> Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="buscar_cliente.php"><i class="bi bi-search-heart"></i> Buscar</a></li>
-          <li class="nav-item"><a class="nav-link" href="registro_cliente.php"><i class="bi bi-person-plus"></i> Registrar</a></li>
-          <li class="nav-item"><a class="nav-link active" href="historial.php"><i class="bi bi-journal-text"></i> Historial</a></li>
-          <li class="nav-item"><a class="nav-link" href="citas.php"><i class="bi bi-calendar-heart"></i> Citas</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="bi bi-person-circle"></i> <?php echo $usuario; ?></a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Cuenta</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HEADER -->
   <header>
-    <h1><i class="bi bi-journal-text"></i> Detalles del Historial</h1>
-    <p class="text-muted">Consulta toda la información registrada de la atención de la mascota.</p>
+        <?php include('../includes/header.php'); ?>
   </header>
 
   <!-- CONTENIDO -->
-  <div class="container my-5">
-    <div class="card shadow p-4 border-0">
-      <h5 class="text-warning"><i class="bi bi-paw"></i> Información de la Mascota</h5>
-      <table class="table table-bordered mt-3">
-        <tr><th>Nombre</th><td>Rocky</td></tr>
-        <tr><th>Especie</th><td>Perro</td></tr>
-        <tr><th>Raza</th><td>Labrador</td></tr>
-        <tr><th>Edad</th><td>3 años</td></tr>
-        <tr><th>Sexo</th><td>Macho</td></tr>
-      </table>
+<main class="container my-5 flex-grow-1">
+  <div class="card shadow p-4 border-0">
 
-      <h5 class="text-warning mt-4"><i class="bi bi-person-lines-fill"></i> Información del Dueño</h5>
-      <table class="table table-bordered mt-3">
-        <tr><th>Cliente</th><td>Ana López</td></tr>
-        <tr><th>Teléfono</th><td>987654321</td></tr>
-        <tr><th>Correo</th><td>ana@email.com</td></tr>
-      </table>
+    <div class="row">
+  
+      <!-- Información Dueño -->
+      <div class="col-12 col-md-6">
+        <h5 class="text-warning"><i class="bi bi-person-lines-fill"></i> Información del Dueño</h5>
+        <table class="table table-bordered mt-3">
+          <tr>
+            <th>
+              Dni
+            </th>
+            <!-- Mostrara todos los dueños asignados segun 
+             se seleccione cambiara los datos del dueño 
+             datos del perro seguiran msotrandose-->
+            <td>
+              <select class="form-select" name="id_dueño" required>
+                <?php foreach ($duenos as $d): ?>
+                  <option value="<?php echo $d['id_dueño']; ?>">
+                    <?php echo $d['dni'] . " - " . $d['nombres'] . " " . $d['p_apellido']; ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+            </td>
+          </tr>
+          <tr><th>Nombres</th><td>Ana López</td></tr>
+          <tr><th>Apellidos</th><td>Ana López</td></tr>
+          <tr><th>Correo</th><td>ana@email.com</td></tr>
+          <tr><th>Teléfono</th><td>987654321</td></tr>
+          <tr><th>Dirección<td>Fiscal s/n Km 1048</td></th></tr>
+        </table>
+      </div>
+      <!-- Información Mascota -->
+      <div class="col-12 col-md-6">
+        <h5 class="text-warning"><i class="bi bi-paw"></i> Información de la Mascota</h5>
+        <table class="table table-bordered mt-3">
+          <tr><th>Nombre</th><td>Rocky</td></tr>
+          <tr><th>Especie</th><td>Perro</td></tr>
+          <tr><th>Raza</th><td>Labrador</td></tr>
+          <tr><th>Edad</th><td>3 años</td></tr>
+          <tr><th>Sexo</th><td>Macho</td></tr>
+        </table>
+      </div>
+    </div>
 
-      <h5 class="text-warning mt-4"><i class="bi bi-file-medical"></i> Detalles de la Atención</h5>
+    <!-- Detalles de Atención -->
+    <!-- Mostrar la ultima atención -->
+    <div class="col-12 mt-4">
+      <h5 class="text-warning"><i class="bi bi-file-medical"></i> Detalles de la Atención</h5>
       <table class="table table-bordered mt-3">
         <tr><th>Fecha</th><td>2025-10-10</td></tr>
         <tr><th>Motivo</th><td>Vacunación anual</td></tr>
@@ -112,17 +81,21 @@ $usuario = $_SESSION['usuario'];
         <tr><th>Veterinario</th><td>Dr. Ramírez</td></tr>
         <tr><th>Observaciones</th><td>Mascota en buen estado general.</td></tr>
       </table>
-
-      <div class="text-center mt-4">
-        <a href="historial.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
-        <a href="editar_historial.php?id=1" class="btn btn-warning"><i class="bi bi-pencil-square"></i> Editar</a>
-      </div>
     </div>
+
+    <div class="text-center mt-4">
+      <a href="buscar.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
+      <a href="editar_historial.php" class="btn btn-warning"><i class="bi bi-pencil-square"></i> Editar</a>
+      <a href="#" class="btn btn-warning"><i class="bi bi-pencil"></i> Nuevo Dueño</a>
+    </div>
+
   </div>
+</main>
+
 
   <!-- FOOTER -->
   <footer>
-    <p class="mb-0">© 2025 Veterinaria Tessa | Ver Historial</p>
+    <?php include('../includes/footer.php'); ?>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
