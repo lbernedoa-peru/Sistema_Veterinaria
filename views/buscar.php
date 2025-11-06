@@ -69,11 +69,17 @@ $clientes = cargar_clientes($filtro_buscar);
                                         <td><?php echo htmlspecialchars($cliente['Telefono']); ?></td>
                                         <td><?php echo htmlspecialchars($cliente['N_Mascota']); ?></td>
                                         <td>
-                                            <a href="ver_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-warning btn-sm me-1">
+                                            <a href="ver_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-primary btn-sm me-1">
                                                 <i class="bi bi-eye"></i> Ver
                                             </a>
-                                            <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-success btn-sm">
+                                            <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-warning btn-sm me-1">
                                                 <i class="bi bi-pencil-square"></i> Editar
+                                            </a>
+                                            <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-success btn-sm me-1">
+                                                <i class="bi bi-pencil-square"></i> Agregar
+                                            </a>
+                                            <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-danger btn-sm me-1">
+                                                <i class="bi bi-pencil-square"></i> Eliminar
                                             </a>
                                         </td>
                                     </tr>
