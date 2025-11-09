@@ -38,7 +38,7 @@ $clientes = cargar_historial($filtro_buscar);
             <div class="card border-0 shadow p-4">
               <h4 class="text-center mb-4 text-warning"><i class="bi bi-journal-text"></i> Historial Clínico de Mascotas</h4>
 
-              <form method="GET" action="historial.php">
+              <form method="Post" action="">
                 <div class="input-group mb-4">
                   <input type="text" name="busqueda" class="form-control" placeholder="Buscar por nombre de mascota o cliente" required>
                   <button class="btn btn-warning fw-bold" type="submit">
@@ -52,12 +52,12 @@ $clientes = cargar_historial($filtro_buscar);
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Fecha</th>
+                      <th>Fecha Y Hora</th>
                       <th>Cliente</th>
                       <th>Dni</th>
                       <th>Mascota</th>
                       <th>Tratamiento</th>
-                      <th>Motivo</th>
+                      <th>Descripcion</th>
                       <th>Veterinario</th>
                       <th>Costo</th>
                       <th>Acciones</th>
@@ -75,13 +75,17 @@ $clientes = cargar_historial($filtro_buscar);
                                         <td><?php echo htmlspecialchars($cliente['Motivo']); ?></td>
                                         <td><?php echo htmlspecialchars($cliente['Veterinario']); ?></td>
                                         <td><?php echo htmlspecialchars($cliente['Costo']); ?></td>
-                                        <td>
-                                            <a href="ver_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-warning btn-sm me-1">
-                                                <i class="bi bi-eye"></i> Ver
+                                        <td class="text-center">
+                                          <div class="d-flex gap-2">
+                                            <a href="ver_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" 
+                                              class="btn btn-outline-warning btn-sm">
+                                              <i class="bi bi-eye"></i> 
                                             </a>
-                                            <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-success btn-sm">
-                                                <i class="bi bi-pencil-square"></i> Editar
+                                            <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" 
+                                              class="btn btn-outline-success btn-sm">
+                                              <i class="bi bi-pencil-square"></i> 
                                             </a>
+                                          </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

@@ -30,7 +30,7 @@ function cargar_historial($filtro_buscar = '') {
 
     if (!empty($filtro_buscar)) {
         $filtro_buscar = trim(str_replace("'", "''", $filtro_buscar));
-        $query .= " WHERE d.p_nombre LIKE :filtro OR d.dni LIKE :filtro";
+        $query .= " WHERE d.p_nombre LIKE :filtro OR d.dni LIKE :filtro OR m.nombre LIKE :filtro";
     }
 
     try {
