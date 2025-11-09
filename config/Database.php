@@ -2,7 +2,7 @@
 // config/Database.php
 class Database {
     private $host = "localhost";
-    private $db_name = "sistema_veterinaria"; // Cambia por el nombre real
+    private $db_name = "veterinaria"; // Cambia por el nombre real
     private $username = "root"; // Ejemplo: root
     private $password = ""; // Ejemplo: ""
     private $conn;

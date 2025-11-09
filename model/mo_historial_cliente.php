@@ -12,20 +12,20 @@ function cargar_historial($filtro_buscar = '') {
     }
 
     $query = "SELECT 
-      atc.id_atencion AS Id,
-      atc.f_registro AS Fecha_registro,
-      d.p_nombre AS Nombre,
-      d.dni AS Dni,
-      m.nombre AS N_Mascota,
+      atc.id_atencion   AS Id,
+      atc.f_registro    AS Fecha_registro,
+      d.p_nombre        AS Nombre,
+      d.dni             AS Dni,
+      m.nombre          AS N_Mascota,
       atc.tipo_servicio AS Tratamiento,
-      atc.descripcion AS Motivo,
-      atc.id_empleado AS Veterinario,
-      atc.costo AS Costo
+      atc.descripcion   AS Motivo,
+      e.p_nombre        AS Veterinario,
+      atc.costo         AS Costo
       FROM atencion atc
-      INNER JOIN cliente c on atc.id_cliente = c.id_cliente
-      INNER JOIN dueño d ON atc.id_cliente = d.id_dueño
-      INNER JOIN mascota m ON atc.id_cliente = m.id_mascota
-      INNER JOIN empleado e ON atc.id_empleado = e.id_empleado
+      INNER JOIN mascota_dueño md ON atc.id_relacion = md.id_relacion
+      INNER JOIN mascota m ON md.id_mascota = m.id_mascota
+      INNER JOIN dueño d ON md.id_dueño = d.id_dueño
+      INNER JOIN empleado e ON atc.id_responsable = e.id_empleado
       ";
 
     if (!empty($filtro_buscar)) {

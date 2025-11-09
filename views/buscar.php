@@ -49,13 +49,15 @@ $clientes = cargar_clientes($filtro_buscar);
                     </form>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered text-center align-middle">
+                        <table class="table table-bordered table-hover text-center align-middle">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre</th>
+                                    <th>Apellido</th>
                                     <th>DNI</th>
                                     <th>Teléfono</th>
+                                    <th>Relación</th>
                                     <th>Mascota</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -65,21 +67,23 @@ $clientes = cargar_clientes($filtro_buscar);
                                     <tr>
                                         <td><?php echo htmlspecialchars($cliente['Id']); ?></td>
                                         <td><?php echo htmlspecialchars($cliente['Nombre']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Apellido']); ?></td>
                                         <td><?php echo htmlspecialchars($cliente['Dni']); ?></td>
                                         <td><?php echo htmlspecialchars($cliente['Telefono']); ?></td>
+                                        <td><?php echo htmlspecialchars($cliente['Relacion']); ?></td>
                                         <td><?php echo htmlspecialchars($cliente['N_Mascota']); ?></td>
                                         <td>
                                             <a href="ver_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-primary btn-sm me-1">
-                                                <i class="bi bi-eye"></i> Ver
+                                                <i class="bi bi-eye">Ver</i>
                                             </a>
                                             <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-warning btn-sm me-1">
-                                                <i class="bi bi-pencil-square"></i> Editar
+                                                <i class="bi bi-pencil-square">Editar</i> 
                                             </a>
                                             <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-success btn-sm me-1">
-                                                <i class="bi bi-pencil-square"></i> Agregar
+                                                <i class="bi bi-plus">Agregar</i> 
                                             </a>
                                             <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-danger btn-sm me-1">
-                                                <i class="bi bi-pencil-square"></i> Eliminar
+                                                <i class="bi bi-x-circle">Eliminar</i> 
                                             </a>
                                         </td>
                                     </tr>
