@@ -11,7 +11,7 @@
             <li class="nav-item"><a class="nav-link <?php echo ($pagina == 'Buscar') ? 'active' : ''; ?>" href="buscar.php"><i class="bi bi-search-heart"></i> Buscar Cliente</a></li>
             <li class="nav-item"><a class="nav-link <?php echo ($pagina == 'Registrar') ? 'active' : ''; ?>" href="registro.php"><i class="bi bi-person-plus"></i> Registrar Cliente</a></li>
             <li class="nav-item"><a class="nav-link <?php echo ($pagina == 'Historial') ? 'active' : ''; ?>" href="historial.php"><i class="bi bi-journal-text"></i> Historial</a></li>
-            <li class="nav-item"><a class="nav-link <?php echo ($pagina == 'Registro_Atencion') ? 'active' : ''; ?>" href="registro_atencion.php"><i class="bi bi-journal-text"></i> Registrar Atención</a></li>
+      
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="bi bi-person-circle"></i> <?php echo $usuario; ?></a>
               <ul class="dropdown-menu dropdown-menu-end">

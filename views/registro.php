@@ -115,9 +115,12 @@ include('../controller/co_registrar_cliente.php');
                         </div>
 
                         <div class="text-center mt-4">
-                            <button type="submit" name="btnregistro" value="ok" class="btn btn-warning w-50 fw-bold">
+                            <button type="submit" name="btnregistro" value="ok" class="btn btn-success fw-bold ms-3">
                                 <i class="bi bi-check2-circle"></i> Registrar
                             </button>
+                            <a href="inicio.php" class="btn btn-secondary fw-bold ms-3">
+                            <i class="bi bi-arrow-left-circle"></i> Volver
+                        </a>
                         </div>
                     </form>
                 </div>

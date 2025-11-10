@@ -27,7 +27,7 @@ require_once '../controller/co_verAtencion.php';
 
       <!-- Información del Dueño -->
       <div class="col-12 col-md-6">
-        <h5 class="text-warning"><i class="bi bi-person-lines-fill"></i><?php echo htmlspecialchars($tituloRelacion); ?></h5>
+        <h5 class="text-warning"><i class="bi bi-person-lines-fill"></i> <?php echo htmlspecialchars($tituloRelacion); ?></h5>
 
         <?php if (!empty($info)): ?>
           <table class="table table-bordered mt-3">
@@ -91,13 +91,50 @@ require_once '../controller/co_verAtencion.php';
           <?php endif; ?>
         </tbody>
       </table>
+
+      <!-- PAGINACIÓN -->
+      <?php if ($total_paginas > 1): ?>
+        <nav aria-label="Paginación">
+          <ul class="pagination justify-content-center">
+            <!-- Botón Anterior -->
+            <li class="page-item <?php echo ($pagina_actual <= 1) ? 'disabled' : ''; ?>">
+              <a class="page-link" href="?id=<?php echo $id_relacion; ?>&pagina=<?php echo $pagina_actual - 1; ?>">
+                Anterior
+              </a>
+            </li>
+
+            <!-- Números de página -->
+            <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+              <li class="page-item <?php echo ($i == $pagina_actual) ? 'active' : ''; ?>">
+                <a class="page-link" href="?id=<?php echo $id_relacion; ?>&pagina=<?php echo $i; ?>">
+                  <?php echo $i; ?>
+                </a>
+              </li>
+            <?php endfor; ?>
+
+            <!-- Botón Siguiente -->
+            <li class="page-item <?php echo ($pagina_actual >= $total_paginas) ? 'disabled' : ''; ?>">
+              <a class="page-link" href="?id=<?php echo $id_relacion; ?>&pagina=<?php echo $pagina_actual + 1; ?>">
+                Siguiente
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Info de registros -->
+        <p class="text-center text-muted">
+          Mostrando página <?php echo $pagina_actual; ?> de <?php echo $total_paginas; ?> 
+          (Total: <?php echo $total_registros; ?> atenciones)
+        </p>
+      <?php endif; ?>
     </div>
 
     <div class="text-center mt-4">
-      <a href="buscar.php" class="btn btn-outline-secondary">
+      <a href="buscar.php" class="btn btn-outline-secondary fw-bold ms-3">
         <i class="bi bi-arrow-left"></i> Volver
       </a>
-      <a href="editar_historial.php?id=<?= $id_relacion ?>" class="btn btn-warning">
+      <a href="registro_atencion.php?dni=<?= urlencode($info['dni']) ?>&mascota=<?= urlencode($info['mascota']) ?>" 
+        class="btn btn-outline-success fw-bold ms-3">
         <i class="bi bi-pencil-square"></i> Nueva Atención
       </a>
     </div>

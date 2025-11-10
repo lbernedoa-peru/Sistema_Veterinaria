@@ -1,87 +1,116 @@
 <?php
-// views/registro.php
+// views/registro_atencion.php
 session_start();
+
+// Al inicio del archivo, justo después de session_start()
+$pagina_anterior = $_SERVER['HTTP_REFERER'] ?? 'buscar.php'; // fallback si no hay referer
+
+// FORZAMOS SESIÓN PARA PRUEBAS
 if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
-    exit;
+    $_SESSION['usuario'] = 'admin';
+    $_SESSION['nombre_completo'] = 'Administrador';
 }
 
+// === VARIABLES QUE USA TU HEADER ===
 $usuario = $_SESSION['usuario'];
 $pagina = "Registro_Atencion";
 
-include('../config/Database.php');
+// === BOTÓN CANCELAR PERFECTO (vuelve al historial con el mismo id) ===
+$pagina_anterior = $_SERVER['HTTP_REFERER'] ?? 'buscar.php';
+$id_relacion = $_GET['id'] ?? '';
+if ($id_relacion !== '') {
+    $pagina_anterior = "ver_historial.php?id=" . urlencode($id_relacion);
+}
+// ===================================
+
+$dni = htmlspecialchars($_GET['dni'] ?? '');
+$mascota = htmlspecialchars($_GET['mascota'] ?? '');
+
 include('../controller/co_registro_atencion.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <?php include('../includes/head.php'); ?>
+  <?php include('../includes/head.php'); ?>
+  <title>Nueva Atención - <?= $mascota ?: 'Mascota' ?></title>
 </head>
 <body>
     <header>
         <?php include('../includes/header.php'); ?>
     </header>
-    <div class="container my-5">
+
+    <main class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card border-0 shadow p-4">
-                    <h4 class="text-center mb-4 text-warning"><i class="bi bi-person-lines-fill"></i> Registro Atención</h4>
+            <div class="col-lg-9">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-warning text-white text-center">
+                        <h3 class="mb-0">NUEVA ATENCIÓN MÉDICA</h3>
+                    </div>
+                    <div class="card-body p-4">
 
-                    <?php if (isset($mensaje)): ?>
-                        <div class="alert alert-<?= $alerta ?> alert-dismissible fade show" role="alert">
-                            <?= $mensaje ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <?php if (isset($mensaje)): ?>
+                            <div class="alert alert-<?= $alerta ?> alert-dismissible fade show">
+                                <strong><?= $mensaje ?></strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <?php endif; ?>
+
+                        <form method="post">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">DNI del Dueño</label>
+                                    <input type="text" class="form-control" value="<?= $dni ?>" readonly>
+                                    <input type="hidden" name="dni" value="<?= $dni ?>">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Nombre de la Mascota</label>
+                                    <input type="text" class="form-control" value="<?= $mascota ?>" readonly>
+                                    <input type="hidden" name="n_mascota" value="<?= $mascota ?>">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Veterinario</label>
+                                    <input type="text" class="form-control" value="Administrador" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Tipo de Servicio</label>
+                                    <select name="tipo_servicio" class="form-select" required>
+                                        <option value="">Seleccionar servicio...</option>
+                                        <option value="Consulta General">Consulta General</option>
+                                        <option value="Vacuna">Vacuna</option>
+                                        <option value="Desparasitación">Desparasitación</option>
+                                        <option value="Cirugía">Cirugía</option>
+                                        <option value="Peluquería">Peluquería</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Costo (S/.)</label>
+                                    <input type="number" step="0.01" name="costo" class="form-control" min="0" placeholder="50.00" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">Motivo, Diagnóstico y Tratamiento</label>
+                                    <textarea name="motivo" class="form-control" rows="8" placeholder="Describe aquí todo..." required></textarea>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <a href="<?= htmlspecialchars($pagina_anterior) ?>" class="btn btn-outline-danger fw-bold">
+                                    Cancelar
+                                </a>
+                                <button type="submit" name="btnregistro" class="btn btn-outline-success fw-bold">
+                                    Guardar Atención
+                                </button>
                         </div>
-                        <?php 
-                        unset($mensaje, $alerta);
-                    endif; ?>
-
-
-
-                    <form method="post">
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <label class="form-label">DNI</label>
-                                <input type="text" name="dni" class="form-control" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Mascota</label>
-                                <input type="text" name="n_mascota" class="form-control" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Veterinario</label>
-                                <input type="text" name="veterinario" class="form-control" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Tipo Servicio</label>
-                                <input type="text" name="tipo_servicio" class="form-control" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Costo</label>
-                                <input type="text" name="costo" class="form-control" required>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Motivo</label>
-                                <textarea type="text" name="motivo" class="form-control " style="resize: none; height: 220px;"required></textarea>
-                            </div>
-                        </div>
-                        <div class="text-center mt-4">
-                            <button type="submit" name="btnregistro" value="ok" class="btn btn-warning w-50 fw-bold">
-                                <i class="bi bi-check2-circle"></i> Registrar
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <footer>
         <?php include('../includes/footer.php'); ?>
     </footer>
-    <!-- Bootstrap JS (Popper incluido) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

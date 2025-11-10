@@ -8,7 +8,7 @@ function registrar_cliente($datos_dueño, $datos_mascota) {
     try {
         $conn->beginTransaction();
         
-        // ✅ Verificar si el DNI ya existe
+        // Verificar si el DNI ya existe
         $sql_check_dni = "SELECT COUNT(*) FROM dueño WHERE dni = ?";
         $stmt_check = $conn->prepare($sql_check_dni);
         $stmt_check->execute([$datos_dueño['dni']]);
@@ -49,7 +49,7 @@ function registrar_cliente($datos_dueño, $datos_mascota) {
         $id_mascota = $conn->lastInsertId();
 
         // Insertar cliente (relación)
-        $sql_cliente = "INSERT INTO cliente (id_mascota, id_dueño) VALUES (?, ?)";
+        $sql_cliente = "INSERT INTO mascota_dueño (id_mascota, id_dueño) VALUES (?, ?)";
         $stmt_cliente = $conn->prepare($sql_cliente);
         $stmt_cliente->execute([$id_mascota, $id_dueño]);
 

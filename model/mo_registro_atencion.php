@@ -2,52 +2,47 @@
 require_once "../config/Database.php";
 
 function registrar_atencion($datos_atencion) {
-    session_start();
-    
-    if (!isset($_SESSION['id_usuario'])) {
-        return false; // seguridad
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
 
-    $id_empleado = $_SESSION['id_usuario'];
+    // Veterinario fijo para pruebas
+    $id_empleado = 1;
 
-    $conexion = new Database();
-    $conn = $conexion->getConnection();
+    $db = new Database();
+    $conn = $db->getConnection();
 
     try {
-        // 1️⃣ Verificar si existe cliente con mascota
-        $sql_cliente = "SELECT c.id_cliente FROM cliente c
-                        INNER JOIN mascota m ON c.id_mascota = m.id_mascota
-                        INNER JOIN dueño d ON c.id_dueño = d.id_dueño
-                        WHERE d.dni = ? AND m.nombre = ?";
-        $stmt = $conn->prepare($sql_cliente);
+        $sql = "SELECT md.id_relacion, md.id_dueño
+                FROM mascota_dueño md
+                INNER JOIN mascota m ON md.id_mascota = m.id_mascota
+                INNER JOIN dueño d ON md.id_dueño = d.id_dueño
+                WHERE d.dni = ? AND m.nombre = ? AND md.tipo_relacion = 'Dueño'
+                LIMIT 1";
+
+        $stmt = $conn->prepare($sql);
         $stmt->execute([$datos_atencion['dni'], $datos_atencion['n_mascota']]);
-        $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+        $rel = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$cliente) {
-            return "cliente_no_existe";
-        }
+        if (!$rel) return "cliente_no_existe";
 
-        $id_cliente = $cliente['id_cliente'];
-
-        // 2️⃣ Insertar en atención
         $sql_insert = "INSERT INTO atencion 
-        (id_empleado, id_cliente, f_registro, tipo_servicio, descripcion, costo)
-        VALUES (?, ?, NOW(), ?, ?, ?)";
-        
-        $stmt_insert = $conn->prepare($sql_insert);
-        $stmt_insert->execute([
+                       (id_empleado, id_relacion, id_responsable, tipo_servicio, descripcion, costo)
+                       VALUES (?, ?, ?, ?, ?, ?)";
+
+        $stmt = $conn->prepare($sql_insert);
+        return $stmt->execute([
             $id_empleado,
-            $id_cliente,
-            $datos_atencion['tratamiento'],
+            $rel['id_relacion'],
+            $rel['id_dueño'],
+            $datos_atencion['tipo_servicio'],
             $datos_atencion['motivo'],
             $datos_atencion['costo']
-        ]);
+        ]) ? true : "insert_fallido";
 
-        return true;
-    } 
-    catch (PDOException $e) {
+    } catch (PDOException $e) {
         error_log("ERROR: " . $e->getMessage());
-        return false;
+        return "error_bd: " . $e->getMessage();
     }
 }
 ?>
