@@ -47,7 +47,7 @@ $total_paginas = ceil($total_registros / $registros_por_pagina);
         <div class="row justify-content-center">
           <div class="col-lg-10">
             <div class="card border-0 shadow p-4">
-              <h4 class="text-center mb-4 text-warning"><i class="bi bi-journal-text"></i> Historial Clínico de Mascotas</h4>
+              <h4 class="text-center mb-4 text-warning"><i class="bi bi-journal-text"></i> Historial de Atención de Mascotas</h4>
 
               <form method="POST" action="">
                 <div class="input-group mb-4">
@@ -93,7 +93,7 @@ $total_paginas = ceil($total_registros / $registros_por_pagina);
                                 class="btn btn-outline-warning btn-sm">
                                 <i class="bi bi-eye"></i> 
                               </a>
-                              <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" 
+                              <a href="#" 
                                 class="btn btn-outline-success btn-sm">
                                 <i class="bi bi-pencil-square"></i> 
                               </a>

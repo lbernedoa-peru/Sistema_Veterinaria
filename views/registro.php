@@ -79,7 +79,7 @@ include('../controller/co_registrar_cliente.php');
 
                         <hr class="my-4">
 
-                        <h4 class="text-center mb-4 text-warning"><i class="bi bi-paw"></i> Datos de la Mascota</h4>
+                        <h4 class="text-center mb-4 text-warning"><i class="bi bi-heart-fill"></i> Datos de la Mascota</h4>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label">Nombre</label>

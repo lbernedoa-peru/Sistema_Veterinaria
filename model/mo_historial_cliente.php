@@ -27,7 +27,7 @@ function cargar_historial($filtro_buscar = '', $pagina = 1, $registros_por_pagin
       LEFT JOIN mascota_dueño md ON atc.id_relacion = md.id_relacion
       LEFT JOIN mascota m ON md.id_mascota = m.id_mascota
       LEFT JOIN dueño d ON md.id_dueño = d.id_dueño
-      LEFT JOIN empleado e ON atc.id_responsable = e.id_empleado
+      LEFT JOIN empleado e ON atc.id_empleado = e.id_empleado
       ";
 
     if (!empty($filtro_buscar)) {

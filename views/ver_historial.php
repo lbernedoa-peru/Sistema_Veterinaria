@@ -45,7 +45,7 @@ require_once '../controller/co_verAtencion.php';
 
       <!-- Información de la Mascota -->
       <div class="col-12 col-md-6">
-        <h5 class="text-warning"><i class="bi bi-paw"></i> Información de la Mascota</h5>
+        <h5 class="text-warning"><i class="bi bi-heart-fill"></i> Información de la Mascota</h5>
 
         <?php if (!empty($info)): ?>
           <table class="table table-bordered mt-3">
@@ -64,11 +64,12 @@ require_once '../controller/co_verAtencion.php';
     <!-- Historial de Atenciones -->
     <div class="col-12 mt-4">
       <h5 class="text-warning"><i class="bi bi-file-medical"></i> Historial Médico</h5>
-
+    <div class="table-responsive">   
       <table class="table table-bordered table-hover mt-3 text-center">
         <thead class="table-warning">
           <tr>
             <th>Fecha y Hora</th>
+            <th>Responsable</th>
             <th>Servicio</th>
             <th>Tratamiento</th>
             <th>Costo</th>
@@ -80,6 +81,11 @@ require_once '../controller/co_verAtencion.php';
             <?php foreach ($historial as $fila): ?>
               <tr>
                 <td><?= htmlspecialchars($fila['f_registro'] ?? ''); ?></td>
+                <td>
+                  <?= htmlspecialchars(($fila['p_nombre'] ?? '') . ' ' . ($fila['p_apellido'] ?? '')); ?>
+                  <br>
+                  <small class="text-muted">(<?= htmlspecialchars($fila['tipo_relacion'] ?? ''); ?>)</small>
+                </td>
                 <td><?= htmlspecialchars($fila['tipo_servicio'] ?? ''); ?></td>
                 <td><?= htmlspecialchars($fila['descripcion'] ?? ''); ?></td>
                 <td>S/. <?= htmlspecialchars($fila['costo'] ?? ''); ?></td>
@@ -87,11 +93,11 @@ require_once '../controller/co_verAtencion.php';
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
-            <tr><td colspan="5" class="text-muted">No hay atenciones registradas.</td></tr>
+            <tr><td colspan="6" class="text-muted">No hay atenciones registradas.</td></tr>
           <?php endif; ?>
         </tbody>
       </table>
-
+</div>
       <!-- PAGINACIÓN -->
       <?php if ($total_paginas > 1): ?>
         <nav aria-label="Paginación">

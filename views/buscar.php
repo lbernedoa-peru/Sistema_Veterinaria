@@ -88,13 +88,13 @@ $total_paginas = ceil($total_registros / $registros_por_pagina);
                                                 <a href="ver_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-primary btn-sm me-1">
                                                     <i class="bi bi-eye"></i> Ver
                                                 </a>
-                                                <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-warning btn-sm me-1">
+                                                <a href="#" class="btn btn-outline-warning btn-sm me-1">
                                                     <i class="bi bi-pencil-square"></i> Editar
                                                 </a>
-                                                <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-success btn-sm me-1">
+                                                <a href="#" class="btn btn-outline-success btn-sm me-1">
                                                     <i class="bi bi-plus"></i> Agregar
                                                 </a>
-                                                <a href="editar_historial.php?id=<?php echo htmlspecialchars($cliente['Id']); ?>" class="btn btn-outline-danger btn-sm me-1">
+                                                <a href="#" class="btn btn-outline-danger btn-sm me-1">
                                                     <i class="bi bi-x-circle"></i> Eliminar
                                                 </a>
                                             </td>
